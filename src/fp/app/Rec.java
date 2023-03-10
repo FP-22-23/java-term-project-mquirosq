@@ -1,5 +1,5 @@
 package fp.app;
 
 public enum Rec {
-	VERY_HIGH, HIGH, MID, LOW
+	LOW, MID, HIGH, VERY_HIGH
 }

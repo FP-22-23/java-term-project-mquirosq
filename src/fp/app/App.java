@@ -1,9 +1,9 @@
 package fp.app;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import fp.utils.Checkers;
 
@@ -14,18 +14,20 @@ public class App implements Comparable<App>{
 	private Double size; //The memory space needed to install the app
 	private Double price; //The price of the app
 	private Restrictions restriction; //The age restriction on the app. Ex. Everybody, Mature...
-	private List<String> category; //Tags the app may have. Ex. finance, game..
+	private Set<String> category; //Tags the app may have. Ex. finance, game..
 	private LocalDate lastUpdate; //Date of the last update made to the app
+	private User targetUser;
 	
 	//Constructors
 	
 	//All parameters
-	public App(String n, List<String> cat, Double rat, Integer rev, Double s, Boolean tp, Double p,Restrictions res, LocalDate lU) {
+	public App(String n, Set<String> cat, Double rat, Integer rev, Double s, Double p, Restrictions res, LocalDate lU, User tU) {
 		checkName(n);
 		checkPrice(p);
 		checkRating(rat);
 		checkSize(s);
 		checkReviews(rev);
+		checkLastUpdate(lU);
 		name = n;
 		category = cat;
 		rating = rat;
@@ -34,6 +36,7 @@ public class App implements Comparable<App>{
 		price = p;
 		restriction = res;
 		lastUpdate = lU;
+		targetUser = tU;
 	}
 	
 	//Only name, price and restriction. The rest are null
@@ -41,13 +44,14 @@ public class App implements Comparable<App>{
 		checkName(n);
 		checkPrice(p);
 		name = n;
-		category = List.of();
+		category = Set.of();
 		rating = 0.0;
 		reviews = 0;
 		size = 0.0;
 		price = p;
 		restriction = res;
 		lastUpdate = null;
+		targetUser = null;
 	}
 	
 	
@@ -61,8 +65,8 @@ public class App implements Comparable<App>{
 		this.name = name;
 	}
 
-	public List<String> getCategory() {
-		return new ArrayList<String>(category);
+	public Set<String> getCategory() {
+		return new HashSet<String>(category);
 	}
 
 	public Double getRating() {
@@ -114,7 +118,12 @@ public class App implements Comparable<App>{
 	}
 
 	public void setLastUpdate(LocalDate lastUpdate) {
+		checkLastUpdate(lastUpdate);
 		this.lastUpdate = lastUpdate;
+	}
+	
+	public User getUser() {
+		return targetUser;
 	}
 
 	//Getter for the derived property Recommended:
@@ -162,7 +171,7 @@ public class App implements Comparable<App>{
 	restriction. Recommended: recommended */
 	public String toString() {
 		return name + " (" + category + "): " + rating + " stars for " + reviews +
-				"reviews. It is a premium app:" + getPremium() + " (" + price + "), " + restriction + ". Updated: " 
+				" reviews. It is a premium app: " + getPremium() + " (" + price + "$), " + restriction + ". Updated: " 
 				+ lastUpdate + ". Recommended: " + getRecommended();
 	}
 
@@ -172,7 +181,7 @@ public class App implements Comparable<App>{
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, price, size);
+		return Objects.hash(name, price, restriction);
 	}
 
 	@Override
@@ -184,8 +193,8 @@ public class App implements Comparable<App>{
 		if (getClass() != obj.getClass())
 			return false;
 		App other = (App) obj;
-		return Objects.equals(size, other.size) && Objects.equals(name, other.name)
-				&& Objects.equals(price, other.price);
+		return Objects.equals(price, other.price) && Objects.equals(name, other.name)
+				&& Objects.equals(restriction, other.restriction);
 	}
 
 
@@ -198,7 +207,7 @@ public class App implements Comparable<App>{
 		if (out==0){
 			out = getPrice().compareTo(a.getPrice());
 			if (out==0){
-				out = getSize().compareTo(a.getSize());
+				out = getRestriction().compareTo(a.getRestriction());
 			}
 		}
 		return out;
@@ -227,14 +236,18 @@ public class App implements Comparable<App>{
 	}
 	
 	//The number of reviews can't be negative
-		private void checkReviews(Integer i) {
-			Checkers.check("Invalid numnber of reviews", i>=0);
-		}
+	private void checkReviews(Integer i) {
+		Checkers.check("Invalid number of reviews", i>=0);
+	}
 	
+	//The last update can take a value after today
+	private void checkLastUpdate(LocalDate lU) {
+		Checkers.check("Invalid numnber of reviews", lU.isBefore(LocalDate.now()) && lU.isEqual(LocalDate.now()));
+	}
 	
 	//Other operations:
 	
-	//Add an element to the category list:
+	//Add an element to the category set:
 	public void addCategory(String s) {
 		category.add(s);
 	}
