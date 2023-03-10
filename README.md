@@ -98,15 +98,15 @@ Enum. Contains the values: MALE, FEMALE, OTHER.
 
 **User**:
 
-#####Properties:
+Properties:
 
 * **gender**: of type Gender contains the target gender for users on the app. Can take the values: MALE, FEMALE, OTHER.
 * **age**: of type Integer, contains the target age for the users of the app.
 * **nationality**: of type string, contains the target nationality for users on the app.
 
-#####Restrictions:
+Restrictions:
 
 - R1: Age can't be negative.
 
-#####String representation:
+String representation:
 String representation, as: User [gender = gender value, age= age value, nationality = "nationality value"]
