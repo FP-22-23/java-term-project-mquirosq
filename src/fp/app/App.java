@@ -16,7 +16,7 @@ public class App implements Comparable<App>{
 	private Restrictions restriction; //The age restriction on the app. Ex. Everybody, Mature...
 	private Set<String> category; //Tags the app may have. Ex. finance, game..
 	private LocalDate lastUpdate; //Date of the last update made to the app
-	private User targetUser;
+	private User targetUser; // Target user of the app (who the app is aimed for)
 	
 	//Constructors
 	
@@ -127,6 +127,7 @@ public class App implements Comparable<App>{
 	}
 
 	//Getter for the derived property Recommended:
+	
 	/* Recommended takes a value that can be LOW, MID, HIGH or VERY_HIGH
 	 * It represents the level of recommendation of the app
 	 * The more reviews and rating, the more recommended it is.
@@ -242,7 +243,7 @@ public class App implements Comparable<App>{
 	
 	//The last update can take a value after today
 	private void checkLastUpdate(LocalDate lU) {
-		Checkers.check("Invalid numnber of reviews", lU.isBefore(LocalDate.now()) && lU.isEqual(LocalDate.now()));
+		Checkers.check("Invalid date", lU == null || lU.isBefore(LocalDate.now()) || lU.isEqual(LocalDate.now()));
 	}
 	
 	//Other operations:
