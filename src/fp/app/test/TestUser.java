@@ -5,6 +5,11 @@ import fp.app.User;
 
 public class TestUser {
 
+	/**
+	 * Shows the user in the console
+	 * @param u
+	 * 		user that will be shown
+	 */
 	public static void showUser(User u) {
 		System.out.println(u);
 		System.out.println("gender: "+u.gender());

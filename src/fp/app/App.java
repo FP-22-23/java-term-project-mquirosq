@@ -20,14 +20,38 @@ public class App implements Comparable<App>{
 	
 	//Constructors
 	
-	//All parameters
+	/**
+	 * Constructor containing all the parameters
+	 * 
+	 * @param n
+	 * 		Name that will be assigned to the new app
+	 * @param cat
+	 * 		Category that will be assigned to the new app
+	 * @param rat
+	 * 		Rating that will be assigned to the new app
+	 * @param rev
+	 * 		Review number that will be assigned to the new app
+	 * @param s
+	 * 		Size value that will be assigned to the new app
+	 * @param p
+	 * 		Price that will be assigned to the new app
+	 * @param res
+	 * 		Restriction that will be assigned to the new app
+	 * @param lU
+	 * 		Last update date that will be assigned to the new app
+	 * @param tU
+	 * 		target user User that will be assigned to the new app
+	 */
 	public App(String n, Set<String> cat, Double rat, Integer rev, Double s, Double p, Restrictions res, LocalDate lU, User tU) {
+		//Check restrictions
 		checkName(n);
 		checkPrice(p);
 		checkRating(rat);
 		checkSize(s);
 		checkReviews(rev);
 		checkLastUpdate(lU);
+		
+		//Assign values
 		name = n;
 		category = cat;
 		rating = rat;
@@ -39,10 +63,23 @@ public class App implements Comparable<App>{
 		targetUser = tU;
 	}
 	
-	//Only name, price and restriction. The rest are null
+	/**
+	 * Constructor that only receives some fields for the App object. The rest are null.
+	 * 
+	 * @param n
+	 * 		Name that will be assigned to the new app
+	 * @param p
+	 * 		price that will be assigned to the new app
+	 * @param res
+	 * 		Restriction that will be assigned to the new app
+	 */
+	
 	public App(String n, Double p, Restrictions res) {
+		//Check restrictions
 		checkName(n);
 		checkPrice(p);
+		
+		//Assign values
 		name = n;
 		category = Set.of();
 		rating = 0.0;
@@ -61,7 +98,7 @@ public class App implements Comparable<App>{
 	}
 
 	public void setName(String name) {
-		checkName(name);
+		checkName(name);					//Check restriction
 		this.name = name;
 	}
 
@@ -74,7 +111,7 @@ public class App implements Comparable<App>{
 	}
 
 	public void setRating(Double rating) {
-		checkRating(rating);
+		checkRating(rating);				//Check restriction
 		this.rating = rating;
 	}
 
@@ -83,7 +120,7 @@ public class App implements Comparable<App>{
 	}
 
 	public void setReviews(Integer reviews) {
-		checkReviews(reviews);
+		checkReviews(reviews);				//Check restriction
 		this.reviews = reviews;
 	}
 
@@ -92,7 +129,7 @@ public class App implements Comparable<App>{
 	}
 
 	public void setSize(Double size) {
-		checkSize(size);
+		checkSize(size);					//Check restriction
 		this.size = size;
 	}
 
@@ -101,7 +138,7 @@ public class App implements Comparable<App>{
 	}
 
 	public void setPrice(Double price) {
-		checkPrice(price);
+		checkPrice(price);					//Check restriction
 		this.price = price;
 	}
 
@@ -118,7 +155,7 @@ public class App implements Comparable<App>{
 	}
 
 	public void setLastUpdate(LocalDate lastUpdate) {
-		checkLastUpdate(lastUpdate);
+		checkLastUpdate(lastUpdate);		//Check restriction
 		this.lastUpdate = lastUpdate;
 	}
 	
@@ -128,15 +165,15 @@ public class App implements Comparable<App>{
 
 	//Getter for the derived property Recommended:
 	
-	/* Recommended takes a value that can be LOW, MID, HIGH or VERY_HIGH
-	 * It represents the level of recommendation of the app
+	/** Recommended takes a value that can be LOW, MID, HIGH or VERY_HIGH.
+	 * It represents the level of recommendation of the app.
 	 * The more reviews and rating, the more recommended it is.
 	 * The lowest the number of reviews and the rating, the least recommended.
 	 * 
-	 * VERY_HIGH: reviews should be more than 10000 and rating more than 4
-	 * HIGH: rating should be over 4 independent of number of reviews
+	 * VERY_HIGH: reviews should be more than 10000 and rating more than 4.
+	 * HIGH: rating should be over 4 independent of number of reviews.
 	 * MID: more than 100000 and rating over 3 or more than 1000 reviews
-	 * and rating over 2.5
+	 * and rating over 2.5.
 	 * LOW: any other result.
 	 */
 	public Rec getRecommended() {
@@ -159,7 +196,7 @@ public class App implements Comparable<App>{
 		return rec;
 	}
 
-	/*Getter for the derived property premium:
+	/**Getter for the derived property premium.
 	*premium determines if you have to pay for the app:
 	* True: The app must be purchased
 	* False: The app is free to use
@@ -177,8 +214,8 @@ public class App implements Comparable<App>{
 	}
 
 	
-	//Equality criterium:
-	//Two apps are equal if the names, the prices and the sizes are the same 
+	//Equality criteria:
+	//Two App objects are equal if the names, the prices and the sizes are the same 
 	
 	@Override
 	public int hashCode() {
@@ -216,39 +253,74 @@ public class App implements Comparable<App>{
 	
 	//Constraints:
 	
-	//The rating must be between 0 and 5, both included:
+	/**Checks that the rating must be between 0 and 5, both included:
+	 * 
+	 * @param rt
+	 * 		rating that will be evaluated
+	 * @throws IllegalArgumentException if the restriction is not satisfied
+	 */
 	private void checkRating(Double rt) {
 		Checkers.check("Invalid rating", rt>=0 && rt<=5);
 	}
 	
-	//The name can't be null:
+	/**
+	 * Checks that the name is not null:
+	 * @param n
+	 * 		name that will be evaluated
+	 * @throws IllegalArgumentException if the restriction is not satisfied
+	 */
 	private void checkName(String n) {
 		Checkers.check("Invalid name", n!=null);
 	}
 	
-	//The price can't be negative
+	/**
+	 * Checks that the price is not negative
+	 * @param p
+	 * 		price that will be evaluated
+	 * @throws IllegalArgumentException if the restriction is not satisfied
+	 */
 	private void checkPrice(Double p) {
 		Checkers.check("Invalid price", p>=0);
 	}
 	
-	//The size can't be negative
+	/**
+	 * Checks that the size is not negative
+	 * @param s
+	 * 		size that will be evaluated
+	 * @throws IllegalArgumentException if the restriction is not satisfied
+	 */
 	private void checkSize(Double s) {
 		Checkers.check("Invalid size", s>=0);
 	}
 	
-	//The number of reviews can't be negative
+	
+	/**
+	 * Checks that the number of reviews is not negative
+	 * @param i
+	 * 		number of reviews that will be evaluated
+	 * @throws IllegalArgumentException if the restriction is not satisfied
+	 */
 	private void checkReviews(Integer i) {
 		Checkers.check("Invalid number of reviews", i>=0);
 	}
 	
 	//The last update can take a value after today
+	/**
+	 * Checks that the last update is not a value after today
+	 * @param lU
+	 * 		date that will be evaluated
+	 * @throws IllegalArgumentException if the restriction is not satisfied
+	 */
 	private void checkLastUpdate(LocalDate lU) {
 		Checkers.check("Invalid date", lU == null || lU.isBefore(LocalDate.now()) || lU.isEqual(LocalDate.now()));
 	}
 	
-	//Other operations:
 	
-	//Add an element to the category set:
+	/** Add an element to the category set.
+	 * 
+	 * @param s
+	 * 		String that will be added to the category set
+	 */
 	public void addCategory(String s) {
 		category.add(s);
 	}

@@ -14,6 +14,11 @@ public class TestAppFactory {
 		Apps apps = AppFactory.readApps(file);
 		System.out.println(apps.getSize() + " apps have been read.");
 		System.out.print("The first 3 apps are: " + apps.getApps().subList(0, 3));
+	
+		System.out.println("\nTestReadAppsStream =============");
+		apps = AppFactory.readAppsStream(file);
+		System.out.println(apps.getSize() + " apps have been read.");
+		System.out.print("The first 3 apps are: " + apps.getApps().subList(0, 3));
 	}
 	
 

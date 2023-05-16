@@ -111,6 +111,9 @@ Enum. Contains the values: MALE, FEMALE, OTHER.
 #####String representation:
 String representation, as: User [gender = gender value, age= age value, nationality = "nationality value"]
 
+#####Natural order:
+They will be ordered by their ages, then their nationality and finally their age.
+
 
 ### Factory - AppFactory
 Factory class used to create objects of type Apps.
@@ -130,6 +133,7 @@ Container class of the objects of type App.
 
 - C1: Default constructor. Creates an object of type Apps with an empty apps property.
 - C2: Constructor with a parameter of type Collection\<App\>. Creates an object of type Apps with the apps included in the collection given as parameter.
+- C3: Constructor with a parameter of type Stream\<App\>. Creates and object of type Apps with the apps included in the stream.
 
 **Equality criteria**: Two objects of type Apps are equal if their apps properties are equal.
 
@@ -139,12 +143,23 @@ Container class of the objects of type App.
 - _void addApp(App a)_: Adds an app to the apps property.
 -_void addApps(Collection<App> a)_: Adds all the apps contained in a collection to the apps property.
 -_void removeApp(App a)_: Removes an app from the apps property.
--_Boolean containsCategory(String cat)_ : EXISTS function that returns true if there is at least one App object cotained in the apps property with a category property containing a given category (cat).
--_Double averagePrice(Double rating)_: AVERAGE function that returns the average of the price property of all the App objects contained in the apps property whose rating property is over a given value (rating).
--_List<App> getRecommendedApps(Rec rec)_: Selection filtering function that returns a list of the App objects contained in the apps property with a recommended property over or equal to the one given (rec). 
--_Map<Restrictions,SortedSet<App>> groupRestrictions()_: Grouping method that returns a Map in which the keys are the values of the restriction property of the App objects in the apps property, and the values are a SortedSet the objects of type App that have these restriction value sorted by the natural order.
--_Map<Double, Long> reviewsByPrice()_: Grouping method that returns a Map in which the keys are the different values of the price property of the App objects in the apps property, and the values are the sum of the reviews properties of the App objects with said price.
+-_Boolean containsCategory(String cat)_ : EXISTS function that returns true if there is at least one App object cotained in the apps property with a category property containing a given category (cat). Implemented using for loops.
+-_Boolean containsCategoryStream(String cat)_ : EXISTS function that returns true if there is at least one App object cotained in the apps property with a category property containing a given category (cat). Implemented using Streams.
+-_Double averagePrice(Double rating)_: AVERAGE function that returns the average of the price property of all the App objects contained in the apps property whose rating property is over a given value (rating). Implemented using for loops.
+-_Double averagePriceStream(Double rating)_: AVERAGE function that returns the average of the price property of all the App objects contained in the apps property whose rating property is over a given value (rating). Implemented using Streams.
+-_List<App> getRecommendedApps(Rec rec)_: Selection filtering function that returns a list of the App objects contained in the apps property with a recommended property over or equal to the one given (rec). Implemented using for loops. 
+-_List<App> getRecommendedAppsStream(Rec rec)_: Selection filtering function that returns a list of the App objects contained in the apps property with a recommended property over or equal to the one given (rec). Implemented using Streams. 
+-_Map<Restrictions,SortedSet<App>> groupRestrictions()_: Grouping method that returns a Map in which the keys are the values of the restriction property of the App objects in the apps property, and the values are a SortedSet the objects of type App that have these restriction value sorted by the natural order. Implemented using for loops.
+-_Map<Double, Long> reviewsByPrice()_: Grouping method that returns a Map in which the keys are the different values of the price property of the App objects in the apps property, and the values are the sum of the reviews properties of the App objects with said price. Implemented using for loops.
+- Map<Double, Integer> _reviewsByPriceStream()_ : Grouping method that returns a Map in which the keys are the different values of the price property of the App objects in the apps property, and the values are the sum of the reviews properties of the App objects with said price. Implemented using Streams.
+- App _getBiggestAppOfCategory(String cat)_: Returns the App with the maximum price that is associated to a given category (Parameter cat). Implemented using Streams.
+- List<App> _getNMostReviewsWithRestriction(Restrictions res, Long n)_ : returns a list with the n (parameter) apps soted by number of reviews with a restriction lower or equal to the given one (parameter res). Implemented using Streams. Raises an exception if n is negative.
+- Map<Set<String>, SortedSet<User>> _usersByCategory()_ : returna a map where the keys are the categories and the values are sorted sets of the target users (natural order). Implemented using Streams.
+- Map<Restrictions, App> _minReviewsByRestriction()_ : Returns a map where the keys are the restriction values and the values are the App objects with the minimum number of reviews associated to each key.
+- SortedMap<Restrictions, List<App>> _nMinSizeByRetriction(Long  n)_ : Returns a Sorted Map (natural order) where the keys are the restriction values and the values are lists with the n (parameter) elements with the lowest size. Raises an exception if n is negative.
+- String _userMaxAvPrice()_ : Returns the target user's nationality with the highest associated average price.
 
 **Extra operations**:
-- _Boolean checkRestrictionCategoryRating(Restrictions res, String cat, Double rate)_: FOR ALL function that returns true if all the App objects of the apps property whose category property contain a certain category value (cat) and whose rating property is equal or bigger than a given one (rate) have a restriction property with a value equally or more restrictive than the given one (res).
+- _Boolean checkRestrictionCategoryRating(Restrictions res, String cat, Double rate)_: FOR ALL function that returns true if all the App objects of the apps property whose category property contain a certain category value (cat) and whose rating property is equal or bigger than a given one (rate) have a restriction property with a value equally or more restrictive than the given one (res). For loop implementation.
+- _Boolean checkRestrictionCategoryRatingStream(Restrictions res, String cat, Double rate)_ : FOR ALL function that returns true if all the App objects of the apps property whose category property contain a certain category value (cat) and whose rating property is equal or bigger than a given one (rate) have a restriction property with a value equally or more restrictive than the given one (res). Implemented using streams.
 -_Integer countFreeApps()_: COUNTER function that returns the number of App objects in the apps property which are free (premium derived property equal to false).
