@@ -98,20 +98,20 @@ Enum. Contains the values: MALE, FEMALE, OTHER.
 
 **User**:
 
-#####Properties:
+#### Properties:
 
 * **gender**: of type Gender contains the target gender for users on the app. Can take the values: MALE, FEMALE, OTHER.
 * **age**: of type Integer, contains the target age for the users of the app.
 * **nationality**: of type string, contains the target nationality for users on the app.
 
-#####Restrictions:
+#### Restrictions:
 
 - R1: Age can't be negative.
 
-#####String representation:
+#### String representation:
 String representation, as: User [gender = gender value, age= age value, nationality = "nationality value"]
 
-#####Natural order:
+#### Natural order:
 They will be ordered by their ages, then their nationality and finally their age.
 
 
@@ -162,4 +162,4 @@ Container class of the objects of type App.
 **Extra operations**:
 - _Boolean checkRestrictionCategoryRating(Restrictions res, String cat, Double rate)_: FOR ALL function that returns true if all the App objects of the apps property whose category property contain a certain category value (cat) and whose rating property is equal or bigger than a given one (rate) have a restriction property with a value equally or more restrictive than the given one (res). For loop implementation.
 - _Boolean checkRestrictionCategoryRatingStream(Restrictions res, String cat, Double rate)_ : FOR ALL function that returns true if all the App objects of the apps property whose category property contain a certain category value (cat) and whose rating property is equal or bigger than a given one (rate) have a restriction property with a value equally or more restrictive than the given one (res). Implemented using streams.
--_Integer countFreeApps()_: COUNTER function that returns the number of App objects in the apps property which are free (premium derived property equal to false).
+- _Integer countFreeApps()_ : COUNTER function that returns the number of App objects in the apps property which are free (premium derived property equal to false).
